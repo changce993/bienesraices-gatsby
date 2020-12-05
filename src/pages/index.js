@@ -1,22 +1,52 @@
-import React from "react"
-import { Link } from "gatsby"
+import React from 'react'
+import Layout from '../components/layout';
+import useInicio from '../hooks/useInicio';
+import { css } from 'styled-components';
+import BackgroundImage from 'gatsby-background-image';
+import heroCSS from '../css/hero.module.css';
+import Encuentra from '../components/encuentra';
+import ListadoPropiedades from '../components/listadoPropiedades';
 
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+const Index = () => {
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link> <br />
-    <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
-  </Layout>
-)
+    const { contenido, imagen } = useInicio()[0];
 
-export default IndexPage
+    return (
+        <Layout bg='#f9f9ff' padding='0 0 5rem 0'>
+            <div css={css`overflow:hidden;`}>
+                <BackgroundImage
+                    tag='section'
+                    fluid={imagen.sharp.fluid}
+                    data-sal="zoom-out"
+                    data-sal-duration='2000'
+                >
+                <div className={heroCSS.imagenbg}>
+                    <h1
+                        data-sal="zoom-out"
+                        data-sal-delay='500'
+                        data-sal-duration='1500'
+                        className={heroCSS.titulo}>Venta de casas y departamentos exclusivos</h1>
+                </div>
+                </BackgroundImage>
+            </div>
+
+            <main css={css`height:60vh; display:flex; justify-content:center; align-items:center;`}>
+                <p  
+                    data-sal="slide-up"
+                    data-sal-delay='500'
+                    data-sal-duration='800'
+                    css={css`
+                        font-size:2rem;
+                        width:50%;
+                    `}
+                >{contenido}</p>   
+            </main>
+
+            <Encuentra/>
+
+            <ListadoPropiedades/>            
+        </Layout>
+    )
+}
+
+export default Index

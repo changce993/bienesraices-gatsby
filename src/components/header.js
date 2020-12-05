@@ -1,42 +1,56 @@
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
-import React from "react"
+import React from 'react';
+import { Link, graphql, useStaticQuery } from 'gatsby';
+import Navigation from './navigation';
+import styled, { css } from 'styled-components';
 
-const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
-    </div>
-  </header>
-)
+const HeaderStyled = styled.header`
+    padding:2rem;
+    height:7rem;
 
-Header.propTypes = {
-  siteTitle: PropTypes.string,
-}
+    .header{
+        max-width:1440px;
+        margin:0 auto;
+        text-align:center;
 
-Header.defaultProps = {
-  siteTitle: ``,
+        @media(min-width: 768px){
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        }
+    }
+`
+
+const Header = () => {
+
+    const { logo } = useStaticQuery( graphql`
+        query {
+            logo: file(relativePath: {eq: "logo.svg"}){
+                publicURL
+            }
+        }
+    `);
+
+    return (
+        <HeaderStyled>
+            <div
+                className='header' 
+                data-sal="slide-down"
+                data-sal-duration={1000}
+            >
+                <Link to='/'>
+                    <img
+                        css={css`
+                            height:3rem;
+                        `}
+                        src={logo.publicURL}
+                        alt='logo bienes raices'
+                    />
+                </Link>
+
+                <Navigation/>
+            </div>
+        </HeaderStyled>
+    )
 }
 
 export default Header
